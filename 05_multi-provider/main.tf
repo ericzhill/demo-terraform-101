@@ -14,14 +14,14 @@ variable "namespace" {
 
 provider "github" {
   token        = var.github_token
-  organization = "placeholder"
+  organization = "tfe-201-demo"
 }
 
 provider "aws" {
   version = ">= 1.19.0"
 }
 
-data "github_ip_ranges" "test" {
+data "github_ip_ranges" "github_hosts" {
 }
 
 resource "aws_security_group" "training" {
@@ -40,7 +40,7 @@ resource "aws_security_group" "training" {
     protocol  = "-1"
 
     cidr_blocks = ["0.0.0.0/0"]
-    #cidr_blocks = data.github_ip_ranges.test.pages
+    # cidr_blocks = data.github_ip_ranges.test.pages
   }
 }
 
