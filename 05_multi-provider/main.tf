@@ -39,8 +39,8 @@ resource "aws_security_group" "training" {
     to_port   = 0
     protocol  = "-1"
 
-    cidr_blocks = ["0.0.0.0/0"]
-    # cidr_blocks = data.github_ip_ranges.test.pages
+    # cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = data.github_ip_ranges.github_hosts.pages
   }
 }
 
@@ -69,14 +69,14 @@ resource "aws_instance" "example" {
 
   provisioner "remote-exec" {
     inline = [
-      "ping -c 5 ${cidrhost(element(data.github_ip_ranges.test.pages, 0), 0)}",
+      "ping -c 5 ${cidrhost(element(data.github_ip_ranges.github_hosts.pages, 0), 0)}",
       "ping -c 5 hashicorp.com",
     ]
   }
 }
 
 output "github_pages_ip_ranges" {
-  value = data.github_ip_ranges.test.pages
+  value = data.github_ip_ranges.github_hosts.pages
 }
 
 output "public_ip" {
